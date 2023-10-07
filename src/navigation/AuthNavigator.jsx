@@ -1,11 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from '../screens/Login.jsx';
-import ForgotPassword from '../screens/ForgotPassword.jsx';
-import Home from '../screens/Home.jsx';
-import Clubes from '../screens/Clubes.jsx';
-import Inscripcion from '../screens/Inscripcion.jsx';
+import Login from '../screens/auth/Login.jsx';
+import ForgotPassword from '../screens/auth/ForgotPassword.jsx';
 
 import DrawerNavigator from './DrawerNavigator.jsx';
 

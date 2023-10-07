@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
 import Feather from '@expo/vector-icons/Feather'; 
-import InputField from '../components/InputField.jsx';
+import InputField from '../../components/InputField.jsx';
 
 const Login = ({ navigation }) => {
     return (

@@ -1,18 +1,14 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import Home from '../screens/Home.jsx';
 import Clubes from '../screens/Clubes.jsx';
 import Inscripcion from '../screens/Inscripcion.jsx';
-import Login from '../screens/Login.jsx';
+import Login from '../screens/auth/Login.jsx';
 import {MaterialIcons} from '@expo/vector-icons/';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
-
 const HomeIcon =({focused,color, size})=><MaterialIcons name="home" size={size} color={color} />
 const ClubesIcon = ({focused,color, size }) => <MaterialCommunityIcons name="boxing-glove" size={size} color={color} />
 const InscripcionIcon =({focused,color, size})=><Foundation name="clipboard-pencil" size={size} color={color} />

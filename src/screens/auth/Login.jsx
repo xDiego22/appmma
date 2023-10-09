@@ -1,7 +1,8 @@
 import React from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from '@expo/vector-icons/Feather'; 
 import InputField from '../../components/InputField.jsx';
+import Captcha from '../../components/Captcha.jsx';
 
 const Login = ({ navigation }) => {
     return (
@@ -46,6 +47,10 @@ const Login = ({ navigation }) => {
                     inputType="password"
                     maxLength={15}
                 />
+
+                <View>
+                    <Captcha/>
+                </View>
             
                 <TouchableOpacity
                     onPress={() => navigation.navigate('DrawerNavigator')}
@@ -74,8 +79,8 @@ const Login = ({ navigation }) => {
                         marginBottom: 10,
                         marginTop: 20
                     }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-                        <Text style={{color: '#4E4E4E', fontWeight: '700'}}> Olvidé mi contraseña</Text>
+                    <TouchableOpacity style={styles.forgotPasswordButton} onPress={() => navigation.navigate('ForgotPassword')}>
+                        <Text style={styles.forgotPasswordButtonText}> Olvidé mi contraseña</Text>
                     </TouchableOpacity>
                 </View>
             
@@ -83,5 +88,16 @@ const Login = ({ navigation }) => {
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+  forgotPasswordButton: {
+    backgroundColor: 'transparent',
+    padding: 10,
+  },
+  forgotPasswordButtonText: {
+    color: '#424242',
+    textDecorationLine: 'underline',
+  },
+});
 
 export default Login;

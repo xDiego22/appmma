@@ -1,93 +1,86 @@
 import React from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Feather from '@expo/vector-icons/Feather'; 
-import InputField from '../../components/InputField.jsx';
+import { SafeAreaView, View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import Feather from '@expo/vector-icons/Feather';
 import Captcha from '../../components/Captcha.jsx';
 import { useState } from 'react';
 
-const Login = ({ navigation }) => {
+const InputField = ({ label, icon, inputType, maxLength, value, onChangeText }) => {
+    return (
+        <View>
+            <Text>{label}</Text>
+            <View style={styles.inputContainer}>
+                {icon && (
+                    <Feather name={icon} size={25} color="#666" style={styles.icon} />
+                )}
+                <TextInput
+                    style={styles.input}
+                    placeholder={label}
+                    secureTextEntry={inputType === 'password'}
+                    maxLength={maxLength}
+                    value={value}
+                    onChangeText={onChangeText}
+                />
+            </View>
+        </View>
+    );
+}
 
+const Login = ({ navigation }) => {
     const [usuario, setUsuario] = useState(''); // Estado para el nombre de usuario
     const [contrasena, setContrasena] = useState(''); // Estado para la contraseña
     const [camposCompletos, setCamposCompletos] = useState(false);
 
     const handleLogin = () => {
-        // Aquí puedes usar los valores de 'usuario' y 'contrasena' para realizar la autenticación o cualquier otra lógica que necesites.
-        // Por ejemplo, puedes enviar estos datos a un servidor para verificar las credenciales del usuario.
-
         if (usuario === 'usuario' && contrasena === 'contraseña') {
-
-        // Ejemplo hipotético de cómo puedes usar los valores:
-        console.log('usuario', usuario);
-        console.log('contraseña', contrasena);
-
-        // Luego, puedes navegar a la siguiente pantalla
-        navigation.navigate('DrawerNavigator');
-
-    } else {
-        // Muestra un mensaje de error si las credenciales son incorrectas
-        console.log('Credenciales incorrectas');
+            // Acceso permitido
+            navigation.navigate('DrawerNavigator');
+        } else {
+            // Acceso denegado
+            alert('Credenciales incorrectas');
         }
     };
 
     return (
-        <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-            <View style={{paddingHorizontal: 20}}>
-            
+        <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={{ paddingHorizontal: 20 }}>
                 <Text
                     style={{
-                    textAlign:'center',
-                    fontSize: 28,
-                    fontWeight: '500',
-                    color: '#333',
-                    marginBottom: 70,
+                        textAlign: 'center',
+                        fontSize: 28,
+                        fontWeight: '500',
+                        color: '#333',
+                        marginBottom: 70,
                     }}>
-                    Bienvenido! 
+                    Bienvenido!
                 </Text>
 
                 <InputField
                     label={'Nombre de usuario'}
-                    icon={
-                    <Feather
-                    name="user"
-                    size={25}
-                    color="#666"
-                    style={{marginRight: 5}}
-                    />
-                    }
+                    icon={'user'}
                     maxLength={10}
                     value={usuario}
                     onChangeText={(text) => {
                         setUsuario(text);
-                        // Verifica si ambos campos están completos y establece camposCompletos en verdadero o falso.
                         setCamposCompletos(text !== '' && contrasena !== '');
                     }}
                 />
 
                 <InputField
                     label={'Contraseña'}
-                    icon={
-                    <Feather
-                    name="lock"
-                    size={25}
-                    color="#666"
-                    style={{marginRight: 5}}
-                    />
-                    }
+                    icon={'lock'}
                     inputType="password"
                     maxLength={15}
                     value={contrasena}
                     onChangeText={(text) => {
                         setContrasena(text);
-                        // Verifica si ambos campos están completos y establece camposCompletos en verdadero o falso.
                         setCamposCompletos(usuario !== '' && text !== '');
                     }}
                 />
 
                 <View>
-                    <Captcha/>
+                    <Captcha />
                 </View>
-            
+
                 <TouchableOpacity
                     onPress={handleLogin}
                     style={{
@@ -98,7 +91,7 @@ const Login = ({ navigation }) => {
                         marginTop: 15,
                     }}
                     disabled={!camposCompletos}
-                    >
+                >
 
                     <Text
                         style={{
@@ -115,7 +108,7 @@ const Login = ({ navigation }) => {
                     <Text style={{ color: 'red', textAlign: 'center' }}>
                         Por favor, completa todos los campos.
                     </Text>
-                )}       
+                )}
 
                 <View
                     style={{
@@ -128,21 +121,36 @@ const Login = ({ navigation }) => {
                         <Text style={styles.forgotPasswordButtonText}> Olvidé mi contraseña</Text>
                     </TouchableOpacity>
                 </View>
-            
+
             </View>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-  forgotPasswordButton: {
-    backgroundColor: 'transparent',
-    padding: 10,
-  },
-  forgotPasswordButtonText: {
-    color: '#424242',
-    textDecorationLine: 'underline',
-  },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: '#666',
+        marginBottom: 20,
+    },
+    icon: {
+        marginRight: 5,
+    },
+    input: {
+        flex: 1,
+        padding: 10,
+        color: '#666',
+    },
+    forgotPasswordButton: {
+        backgroundColor: 'transparent',
+        padding: 10,
+    },
+    forgotPasswordButtonText: {
+        color: '#424242',
+        textDecorationLine: 'underline',
+    },
 });
 
 export default Login;

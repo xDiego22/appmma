@@ -1,116 +1,80 @@
-import React from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
-import Feather from '@expo/vector-icons/Feather';
+import React, {useContext} from 'react';
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Feather from '@expo/vector-icons/Feather'; 
+import InputField from '../../components/InputField.jsx';
 import Captcha from '../../components/Captcha.jsx';
-import { useState } from 'react';
-
-const InputField = ({ label, icon, inputType, maxLength, value, onChangeText }) => {
-    return (
-        <View>
-            <Text>{label}</Text>
-            <View style={styles.inputContainer}>
-                {icon && (
-                    <Feather name={icon} size={25} color="#666" style={styles.icon} />
-                )}
-                <TextInput
-                    style={styles.input}
-                    placeholder={label}
-                    secureTextEntry={inputType === 'password'}
-                    maxLength={maxLength}
-                    value={value}
-                    onChangeText={onChangeText}
-                />
-            </View>
-        </View>
-    );
-}
+import {AuthContext} from '../../context/AuthContext.jsx';
 
 const Login = ({ navigation }) => {
-    const [usuario, setUsuario] = useState(''); // Estado para el nombre de usuario
-    const [contrasena, setContrasena] = useState(''); // Estado para la contraseña
-    const [camposCompletos, setCamposCompletos] = useState(false);
-
-    const handleLogin = () => {
-        if (usuario === 'usuario' && contrasena === 'contraseña') {
-            // Acceso permitido
-            navigation.navigate('DrawerNavigator');
-        } else {
-            // Acceso denegado
-            alert('Credenciales incorrectas');
-        }
-    };
-
+    const {login} = useContext(AuthContext);
     return (
-        <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
-            <View style={{ paddingHorizontal: 20 }}>
+        <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+            <View style={{paddingHorizontal: 20}}>
+            
                 <Text
                     style={{
-                        textAlign: 'center',
-                        fontSize: 28,
-                        fontWeight: '500',
-                        color: '#333',
-                        marginBottom: 70,
+                    textAlign:'center',
+                    fontSize: 28,
+                    fontWeight: '500',
+                    color: '#333',
+                    marginBottom: 70,
                     }}>
-                    Bienvenido!
+                    Bienvenido! 
                 </Text>
 
                 <InputField
-                    label={'Nombre de usuario'}
-                    icon={'user'}
+                    label={'Cedula'}
+                    icon={
+                    <Feather
+                    name="user"
+                    size={25}
+                    color="#666"
+                    style={{marginRight: 5}}
+                    />
+                    }
+                    keyboardType='numeric'
                     maxLength={10}
-                    value={usuario}
-                    onChangeText={(text) => {
-                        setUsuario(text);
-                        setCamposCompletos(text !== '' && contrasena !== '');
-                    }}
                 />
 
                 <InputField
                     label={'Contraseña'}
-                    icon={'lock'}
+                    icon={
+                    <Feather
+                    name="lock"
+                    size={25}
+                    color="#666"
+                    style={{marginRight: 5}}
+                    />
+                    }
                     inputType="password"
                     maxLength={15}
-                    value={contrasena}
-                    onChangeText={(text) => {
-                        setContrasena(text);
-                        setCamposCompletos(usuario !== '' && text !== '');
-                    }}
                 />
 
                 <View>
-                    <Captcha />
+                    <Captcha/>
                 </View>
-
+            
                 <TouchableOpacity
-                    onPress={handleLogin}
+                    onPress={() => login()}
                     style={{
-                        backgroundColor: camposCompletos ? '#FF5C5C' : '#999',
+                        backgroundColor: '#FF5C5C',
                         padding: 20,
                         borderRadius: 10,
                         marginBottom: 30,
-                        marginTop: 15,
-                    }}
-                    disabled={!camposCompletos}
-                >
-
+                        marginTop: 15
+                    }}>
                     <Text
                         style={{
-                            textAlign: 'center',
-                            fontWeight: '700',
-                            fontSize: 16,
-                            color: '#fff',
+                        textAlign: 'center',
+                        fontWeight: '700',
+                        fontSize: 16,
+                        color: '#fff',
                         }}>
                         Entrar
                     </Text>
                 </TouchableOpacity>
 
-                {!camposCompletos && (
-                    <Text style={{ color: 'red', textAlign: 'center' }}>
-                        Por favor, completa todos los campos.
-                    </Text>
-                )}
-
-                <View
+                {/* <View
                     style={{
                         flexDirection: 'row',
                         justifyContent: 'center',
@@ -120,37 +84,22 @@ const Login = ({ navigation }) => {
                     <TouchableOpacity style={styles.forgotPasswordButton} onPress={() => navigation.navigate('ForgotPassword')}>
                         <Text style={styles.forgotPasswordButtonText}> Olvidé mi contraseña</Text>
                     </TouchableOpacity>
-                </View>
-
+                </View> */}
+            
             </View>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderColor: '#666',
-        marginBottom: 20,
-    },
-    icon: {
-        marginRight: 5,
-    },
-    input: {
-        flex: 1,
-        padding: 10,
-        color: '#666',
-    },
-    forgotPasswordButton: {
-        backgroundColor: 'transparent',
-        padding: 10,
-    },
-    forgotPasswordButtonText: {
-        color: '#424242',
-        textDecorationLine: 'underline',
-    },
+  forgotPasswordButton: {
+    backgroundColor: 'transparent',
+    padding: 10,
+  },
+  forgotPasswordButtonText: {
+    color: '#424242',
+    textDecorationLine: 'underline',
+  },
 });
 
 export default Login;

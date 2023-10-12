@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React,{useContext} from 'react'
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 import {
     Avatar,
@@ -7,10 +7,12 @@ import {
     Caption,
     Text
 } from 'react-native-paper';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 import { Ionicons } from '@expo/vector-icons';
 
 const CustomDrawer = (props) => {
+    const {logout} = useContext(AuthContext);
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props} >
@@ -35,7 +37,7 @@ const CustomDrawer = (props) => {
                 </View>
             </DrawerContentScrollView>
             <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
-                <TouchableOpacity onPress={() => props.navigation.navigate('Login')} style={{paddingVertical: 10}}>
+                <TouchableOpacity onPress={() => logout()} style={{paddingVertical: 10}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Ionicons name="log-out-outline" size={24} color="black" />
                         <Text

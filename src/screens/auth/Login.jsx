@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from '@expo/vector-icons/Feather'; 
 import InputField from '../../components/InputField.jsx';
@@ -6,6 +6,9 @@ import Captcha from '../../components/Captcha.jsx';
 import {AuthContext} from '../../context/AuthContext.jsx';
 
 const Login = ({ navigation }) => {
+    const [cedula, setCedula] = useState(null);
+    const [password, setPassword] = useState(null);
+    
     const {login} = useContext(AuthContext);
     return (
         <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
@@ -33,7 +36,8 @@ const Login = ({ navigation }) => {
                     />
                     }
                     keyboardType='numeric'
-                    maxLength={10}
+                    value={cedula}
+                    onChangeText = {text => setCedula(text)}
                 />
 
                 <InputField
@@ -47,21 +51,18 @@ const Login = ({ navigation }) => {
                     />
                     }
                     inputType="password"
-                    maxLength={15}
+                    value={password}
+                    onChangeText = {text => setPassword(text)}
                 />
-
-                <View>
-                    <Captcha/>
-                </View>
             
                 <TouchableOpacity
-                    onPress={() => login()}
+                    onPress={() => login(cedula,password)}
                     style={{
                         backgroundColor: '#FF5C5C',
                         padding: 20,
                         borderRadius: 10,
                         marginBottom: 30,
-                        marginTop: 15
+                        marginTop: 20
                     }}>
                     <Text
                         style={{

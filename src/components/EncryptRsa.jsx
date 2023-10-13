@@ -1,14 +1,6 @@
-import { View, Text } from 'react-native'
-import React from 'react'
 import RSAKey from 'react-native-rsa-expo';
 
-// const RSAKey = require('react-native-rsa');
-// const bits = 1024;
-// const exponent = '10001'; // must be a string. This is hex string. decimal = 65537
 const rsa = new RSAKey();
-// rsa.generate(bits, exponent);
-// const publicKey = rsa.getPublicString(); // return json encoded string
-// const privateKey = rsa.getPrivateString(); // return json encoded
 
 const publicKeyJson= {"n":"8513f10beb437f5cee4af780ef4c2c5d96573df0bb487d25ecded3411e127f840bd529996d09f3ec44e256cec1ab0d3b4e418bd7d28528e7c69e0826700a90567af16b1b4952e6ca891ac55e02ffd1e0e6c5624f0b78cecfc288668bbd78faf21754893e24e8126189f46e0d34f517f8ac5089d82b28221b3771ed8f9636c931","e":"10001"}
 
@@ -16,9 +8,6 @@ const privateKeyJson = {"n":"8513f10beb437f5cee4af780ef4c2c5d96573df0bb487d25ecd
 
 const publicKey = JSON.stringify(publicKeyJson); // return json encoded string
 const privateKey = JSON.stringify(privateKeyJson); // return json encoded
-
-
-//encript
 
 
 const EncryptRsa = () => {
@@ -40,4 +29,18 @@ const EncryptRsa = () => {
   // console.log(privateKey)
 }
 
+export const Encriptar = (objeto) => {
+  rsa.setPublicString(publicKey);
+
+  const objectToEncrypt = JSON.stringify(objeto);
+
+  const encrypted = rsa.encrypt(objectToEncrypt);
+  return encrypted;
+}
+export const Desencriptar = (objeto) => {
+  
+  rsa.setPrivateString(privateKey);
+  const decrypted = rsa.decrypt(objeto);
+  return decrypted;
+}
 export default EncryptRsa;

@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useState, useEffect} from 'react'
-import { BASE_URL } from '../config/config.jsx'
+import { BASE_URL } from '../config.jsx'
 import axios from 'axios';
-import { Encriptar, Desencriptar} from '../components/EncryptRsa.jsx';
+// import { Encriptar, Desencriptar} from '../components/EncryptRsa.jsx';
 
 export const AuthContext = createContext();
 
@@ -13,22 +13,21 @@ export const AuthProvider = ({ children }) => {
   
   const login = (cedula, contrasena) => {
 
-    const data = {
-      cedula, 
-      contrasena
-    }
-    const dataEncriptado = Encriptar(data);
-    const dataDesEncriptado = Desencriptar(dataEncriptado);
+    // const data = {
+    //   cedula, 
+    //   contrasena
+    // }
+    // const dataEncriptado = Encriptar(data);
+    // const dataDesEncriptado = Desencriptar(dataEncriptado);
 
     setIsLoading(true);
-    axios.post(`${BASE_URL}index.php?pagina=inicio_sesion`, {
+    axios.post(`${BASE_URL}/auth`, {
       
-      // cedula, 
-      // contrasena
-      data: dataEncriptado
+      cedula, 
+      contrasena
+      // data: dataEncriptado
     })
     .then(response => {
-      console.log(response);
       let userInfo = response.data;
       setUserInfo(userInfo);
       setUserToken(userInfo.data.token);
@@ -36,19 +35,14 @@ export const AuthProvider = ({ children }) => {
       AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
       AsyncStorage.setItem('userToken', userInfo.data.token);
 
-      console.log(userInfo);
-      console.log(`informacion de usuario ${userInfo.data.token}`);
+      // console.log(userInfo);
+      // console.log(`informacion de usuario ${userInfo.data.token}`);
     })
     .catch((error) => {
       console.log(`error al iniciar sesion ${error}`);
-      
-      // console.log(cedula);
-      // console.log(contrasena);
-      console.log(dataEncriptado);
-      console.log(dataDesEncriptado);
     })
-    setUserToken('ioioii');//token JWT
-    AsyncStorage.setItem('userToken','ioioii')
+    // setUserToken('ioioii');//token JWT
+    // AsyncStorage.setItem('userToken','ioioii');
     setIsLoading(false);
   }
   const logout = () => {
@@ -64,7 +58,13 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true);
       let userInfo = await AsyncStorage.getItem('userInfo');
       let userToken = await AsyncStorage.getItem('userToken');
-      setUserToken(userToken);
+      userInfo = JSON.parse(userInfo);
+
+      if (userInfo) {
+        setUserInfo(userInfo);
+        setUserToken(userToken);
+        
+      }
       setIsLoading(false);
 
     } catch (error) {
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{login, logout, isLoading, userToken}}>
+    <AuthContext.Provider value={{login, logout, isLoading, userToken, userInfo}}>
         {children}
     </AuthContext.Provider>
   )

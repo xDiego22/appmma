@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const CustomDrawer = (props) => {
     const {logout} = useContext(AuthContext);
+    const {userInfo} = useContext(AuthContext);
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props} >
@@ -24,10 +25,10 @@ const CustomDrawer = (props) => {
                         />
                         <View style={{marginLeft:15, flexDirection:'column'}}>
                             <Title style={{ fontSize: 16, marginTop: 3, fontWeight: 'bold' }}>
-                                Diego Aguilar
+                                {userInfo.data.nombre}
                             </Title>
                             <Caption style={{ fontSize: 14, lineHeight: 14 }}>
-                                C.I.: 29831184
+                                C.I.: {userInfo.data.cedula}
                             </Caption>
                         </View>
                     </View>

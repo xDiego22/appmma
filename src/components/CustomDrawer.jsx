@@ -25,10 +25,10 @@ const CustomDrawer = (props) => {
                         />
                         <View style={{marginLeft:15, flexDirection:'column'}}>
                             <Title style={{ fontSize: 16, marginTop: 3, fontWeight: 'bold' }}>
-                                {userInfo.data.nombre}
+                                {userInfo.nombre}
                             </Title>
                             <Caption style={{ fontSize: 14, lineHeight: 14 }}>
-                                C.I.: {userInfo.data.cedula}
+                                C.I.: {userInfo.cedula}
                             </Caption>
                         </View>
                     </View>

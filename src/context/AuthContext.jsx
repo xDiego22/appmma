@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useState, useEffect} from 'react'
 import { BASE_URL } from '../config.jsx'
 import axios from 'axios';
-// import { Encriptar, Desencriptar} from '../components/EncryptRsa.jsx';
+import { Encriptar, Desencriptar} from '../components/EncryptRsa.jsx';
 
 export const AuthContext = createContext();
 
@@ -13,37 +13,32 @@ export const AuthProvider = ({ children }) => {
   
   const login = (cedula, contrasena) => {
 
-    // const data = {
-    //   cedula, 
-    //   contrasena
-    // }
-    // const dataEncriptado = Encriptar(data);
-    // const dataDesEncriptado = Desencriptar(dataEncriptado);
-
+    const data = {
+      cedula, 
+      contrasena
+    }
+    
     setIsLoading(true);
     axios.post(`${BASE_URL}/auth`, {
       
-      cedula, 
-      contrasena
-      // data: dataEncriptado
+      data: Encriptar(data) //datos encriptados enviados por metodo POST 
     })
     .then(response => {
-      let userInfo = response.data;
-      setUserInfo(userInfo);
-      setUserToken(userInfo.data.token);
+      
+      const userToken = Desencriptar(response.data.token); //token encriptado para desencriptar
+      const userInfo = Desencriptar(response.data.data); //data usuario encriptado para desencriptar
+      setUserInfo(userInfo); //se asigna a estado 
+      setUserToken(userToken); //token se pasa a estado
 
-      AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-      AsyncStorage.setItem('userToken', userInfo.data.token);
-
-      // console.log(userInfo);
-      // console.log(`informacion de usuario ${userInfo.data.token}`);
+      AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));//se guarda en localstorage
+      AsyncStorage.setItem('userToken', userToken); //se guarda en localstorage
+     
+      setIsLoading(false);
     })
     .catch((error) => {
       console.log(`error al iniciar sesion ${error}`);
+      setIsLoading(false);
     })
-    // setUserToken('ioioii');//token JWT
-    // AsyncStorage.setItem('userToken','ioioii');
-    setIsLoading(false);
   }
   const logout = () => {
     setIsLoading(true);

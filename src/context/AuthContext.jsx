@@ -17,36 +17,46 @@ export const AuthProvider = ({ children }) => {
       cedula, 
       contrasena
     }
-    
     setIsLoading(true);
+    
     axios.post(`${BASE_URL}/auth`, {
       
       data: Encriptar(data) //datos encriptados enviados por metodo POST 
     })
     .then(response => {
-      
-      const userToken = Desencriptar(response.data.token); //token encriptado para desencriptar
       const userInfo = Desencriptar(response.data.data); //data usuario encriptado para desencriptar
-      setUserInfo(userInfo); //se asigna a estado 
-      setUserToken(userToken); //token se pasa a estado
-
-      AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));//se guarda en localstorage
-      AsyncStorage.setItem('userToken', userToken); //se guarda en localstorage
+      if (userInfo.status ==='success') {
+        
+        const userToken = Desencriptar(response.data.token); //token encriptado para desencriptar
+        setUserInfo(userInfo); //se asigna a estado 
+        setUserToken(userToken); //token se pasa a estado
+  
+        AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));//se guarda en localstorage
+        AsyncStorage.setItem('userToken', userToken); //se guarda en localstorage
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+        alert(userInfo.error);
+      }
      
-      setIsLoading(false);
     })
     .catch((error) => {
       console.log(`error al iniciar sesion ${error}`);
       setIsLoading(false);
     })
   }
-  const logout = () => {
+  const logout = async () => {
+  try {
     setIsLoading(true);
+    await AsyncStorage.removeItem('userInfo');
+    await AsyncStorage.removeItem('userToken');
     setUserToken(null);
-    AsyncStorage.removeItem('userInfo');
-    AsyncStorage.removeItem('userToken');
+  } catch (error) {
+    console.log(`Error al cerrar sesión: ${error}`);
+  } finally {
     setIsLoading(false);
   }
+}
 
   const isLoggedIn = async () => {
     try {

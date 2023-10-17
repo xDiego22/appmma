@@ -9,7 +9,8 @@ export default function InputField({
   fieldButtonLabel,
   fieldButtonFunction,
   value,
-  onChangeText
+  onChangeText,
+  maxLength
 }) {
   return (
     <View
@@ -29,6 +30,7 @@ export default function InputField({
           secureTextEntry={true}
           value={value}
           onChangeText={onChangeText}
+          maxLength={maxLength}
         />
       ) : (
         <TextInput
@@ -37,6 +39,7 @@ export default function InputField({
           style={{flex: 1, paddingVertical: 0}}
           value={value}
           onChangeText={onChangeText}
+          maxLength={maxLength}
         />
       )}
       <TouchableOpacity onPress={fieldButtonFunction}>

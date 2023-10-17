@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { DataTable } from 'react-native-paper';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import axios from 'axios';
-
+import { BASE_URL } from '../config';
 const ReporteResultado = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Realiza una solicitud GET a la API para obtener los datos de resultados
-    axios.get('http:///192.168.0.129/mma/api/resultados') // Actualiza la URL con la dirección de tu servidor
+    axios.get(`${BASE_URL}/resultados`) // Actualiza la URL con la dirección de tu servidor
       .then((response) => {
         setData(response.data);
         setLoading(false);

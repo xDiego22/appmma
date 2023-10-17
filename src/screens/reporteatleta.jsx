@@ -2,14 +2,14 @@ import * as React from 'react';
 import { DataTable } from 'react-native-paper';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import axios from 'axios'; // Importa la biblioteca axios
-
+import {BASE_URL} from '../config.jsx'
 const ReporteAtletas = () => {
   const [data, setData] = React.useState([]); // Estado para almacenar los datos de la API
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     // Realiza una solicitud GET a la API para obtener los datos
-    axios.get('http://192.168.0.129/mma/api/atletas')
+    axios.get(`${BASE_URL}/atletas`)
       .then((response) => {
         setData(response.data); // Almacena los datos en el estado
         setLoading(false); // Establece loading en false cuando se cargan los datos

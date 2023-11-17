@@ -65,10 +65,18 @@ export const AuthProvider = ({ children }) => {
       let userToken = await AsyncStorage.getItem('userToken');
       userInfo = JSON.parse(userInfo);
 
-      if (userInfo) {
-        setUserInfo(userInfo);
-        setUserToken(userToken);
-        
+      if (userInfo && userToken) {
+        // Verificar la fecha de expiración del token
+        const expDate = new Date(userInfo.exp * 1000).toLocaleString();
+        const time = new Date().toLocaleString();
+        if (expDate > time) {
+          
+          setUserInfo(userInfo);
+          setUserToken(userToken);
+        } else {
+          // Si el token ha expirado, cerrar sesión
+          await logout();
+        }
       }
       setIsLoading(false);
 

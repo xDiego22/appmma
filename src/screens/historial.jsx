@@ -1,65 +1,97 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
-import ModalDropdown from 'react-native-modal-dropdown';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import ModalSelector from 'react-native-modal-selector';
+import { DataTable } from 'react-native-paper';
+import axios from 'axios';
 
 const Historial = () => {
-  const [historial, setHistorial] = useState([]);
-  const [selectedAtleta, setSelectedAtleta] = useState(null); // Cambiado a null
-  const flatListRef = useRef(null);
+  const [atletas, setAtletas] = useState([]);
+  const [historialData, setHistorialData] = useState([]);
+  const [selectedAtleta, setSelectedAtleta] = useState(null);
+  const modalSelectorRef = useRef(null);
 
-  const atletas = ['Luis Perdomo', 'Diego Aguilar', 'Cirez Barriga', 'Ruander Cuello'];
+  useEffect(() => {
+    fetchDataFromApi();
+  }, []);
 
-  const agregarEntradaAlHistorial = (actividad) => {
-    setHistorial((prevHistorial) => [
-      {
-        actividad,
-        timestamp: new Date().toLocaleString(),
-      },
-      ...prevHistorial,
-    ]);
-  };
-
-  const handleAtletaChange = (atleta) => {
-    setSelectedAtleta(atleta);
-    if (flatListRef.current) {
-      flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+  const fetchDataFromApi = async () => {
+    try {
+      const response = await axios.get('http://192.168.0.129/mma/api/historial');
+      setAtletas(response.data);
+    } catch (error) {
+      console.error('Error al obtener datos de la API', error);
     }
   };
 
+  const handleSelectAtleta = async (option) => {
+    try {
+      setSelectedAtleta(option.atleta);
+  
+      const response = await axios.get(`http://192.168.0.129/mma/api/historial-atleta/${option.atleta.id}`);
+      console.log('Response from historial-atleta API:', response.data);
+  
+      setHistorialData(response.data.historial || []);
+    } catch (error) {
+      console.error('Error al obtener historial del atleta', error);
+    }
+  };
+
+  // Ajusta la estructura de datos para el ModalSelector
+  const selectorData = atletas.map((item) => ({
+    key: item.id,
+    label: `${item.cedula} -- ${item.nombre}`,
+    atleta: item, // Incluye el objeto completo del atleta
+  }));
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Historial de Atletas</Text>
-      <View style={styles.dropdownContainer}>
-        <Text style={styles.dropdownLabel}>Seleccionar Atleta: </Text>
-        <ModalDropdown
-          options={atletas}
-          defaultValue={selectedAtleta || 'Seleccione...'} // Cambiado el valor predeterminado
-          onSelect={(index, value) => handleAtletaChange(value)}
-          style={styles.dropdown}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownOptions}
-        />
-      </View>
-      <Button
-        title="Realizar Actividad"
-        onPress={() => agregarEntradaAlHistorial('Actividad realizada')}
+      <Text style={styles.title}>Historial Atletas</Text>
+
+      <ModalSelector
+        data={selectorData}
+        initValue={selectedAtleta ? `${selectedAtleta.cedula} -- ${selectedAtleta.nombre}` : "Seleccione un atleta"}
+        supportedOrientations={['portrait']}
+        accessible={true}
+        scrollViewAccessibilityLabel={'Scrollable options'}
+        cancelButtonAccessibilityLabel={'cancelar'}
+        onChange={(option) => handleSelectAtleta(option)}
+        ref={modalSelectorRef}
+        style={styles.modalSelector} // Agrega el estilo aquí
       />
-      {selectedAtleta !== null && ( // Renderiza la FlatList solo si se ha seleccionado un atleta
-        <FlatList
-          ref={flatListRef}
-          data={historial}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.entry}>
-              <Text>{item.actividad}</Text>
-              <Text style={styles.timestamp}>{item.timestamp}</Text>
-            </View>
+
+      <ScrollView horizontal>
+
+        <DataTable>
+        <DataTable.Header>
+          <DataTable.Title style={styles.headerTitle}>
+            <Text style={{ fontSize: 20 }}>Eventos donde participo</Text>
+          </DataTable.Title>
+          <DataTable.Title style={styles.headerTitle}>
+            <Text style={{ fontSize: 20 }}>Resultado ronda</Text>
+          </DataTable.Title>
+        </DataTable.Header>
+
+
+          {historialData.length > 0 ? (
+            historialData.map((item, index) => (
+              <DataTable.Row key={item.cedula || index} style={styles.row}>
+                <DataTable.Cell style={styles.cell}>
+                  <Text style={{ fontSize: 20 }}>{item.nombre_evento}</Text>
+                  </DataTable.Cell>
+                <DataTable.Cell style={styles.cell}>
+                  <Text style={{ fontSize: 20 }}>{item.resultado_ronda}</Text>
+                  </DataTable.Cell>
+              </DataTable.Row>
+            ))
+          ) : (
+            <DataTable.Row key="empty">
+              <DataTable.Cell colSpan={2} style={styles.cell}>
+                Historial vacío
+              </DataTable.Cell>
+            </DataTable.Row>
           )}
-          ListEmptyComponent={
-            <Text style={styles.emptyMessage}>No hay actividades en el historial.</Text>
-          }
-        />
-      )}
+        </DataTable>
+      </ScrollView>
     </View>
   );
 };
@@ -67,43 +99,34 @@ const Historial = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
   },
-  dropdownContainer: {
-    flexDirection: 'row',
+  headerTitle: {
+    marginHorizontal: 20, 
+  },
+  row: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  dataTableContainer: {
     alignItems: 'center',
-    marginBottom: 16,
   },
-  dropdownLabel: {
-    fontSize: 18,
+  cell: {
+    fontSize: 19,
+    paddingVertical: 9,
+    paddingHorizontal: 17,
+    alignItems: 'flex-start', // Alineación horizontal al centro
+    justifyContent: 'flex-start', // Alineación vertical al centro
   },
-  dropdown: {
-    width: 150,
-    padding: 10,
-  },
-  dropdownText: {
-    fontSize: 16,
-  },
-  dropdownOptions: {
-    maxHeight: 200,
-  },
-  entry: {
-    marginBottom: 8,
-  },
-  timestamp: {
-    color: 'gray',
-  },
-  emptyMessage: {
-    fontSize: 16,
-    color: 'gray',
-    textAlign: 'center',
+  modalSelector: {
+    height: 50, // ajusta la altura según tus necesidades
   },
 });
 

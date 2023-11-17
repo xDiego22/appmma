@@ -55,8 +55,8 @@ const ReporteAtletas = () => {
             <Text>Cargando datos...</Text>
           </View>
         ) : (
-          data.slice(from, to).map((item, index) => (
-            <DataTable.Row key={index} style={styles.row}>
+          data.slice(from, to).map((item,) => (
+            <DataTable.Row key={item.cedula} style={styles.row}>
               <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.id_club}</Text></DataTable.Cell>
               <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.cedula}</Text></DataTable.Cell>
               <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.nombre}</Text></DataTable.Cell>

@@ -3,6 +3,7 @@ import { DataTable } from 'react-native-paper';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import axios from 'axios';
 import { BASE_URL } from '../config';
+
 const ReporteEvento = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,15 +36,33 @@ const ReporteEvento = () => {
     <ScrollView horizontal>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title style={styles.columnHeader}>Nombre</DataTable.Title>
-          <DataTable.Title style={styles.columnHeader}>Fecha</DataTable.Title>
-          <DataTable.Title style={styles.columnHeader}>Hora</DataTable.Title>
-          <DataTable.Title style={styles.columnHeader}>Club Responsable</DataTable.Title>
-          <DataTable.Title style={styles.columnHeader}>Monto</DataTable.Title>
-          <DataTable.Title style={styles.columnHeader}>Dirección</DataTable.Title>
-          <DataTable.Title style={styles.columnHeader}>Juez 1</DataTable.Title>
-          <DataTable.Title style={styles.columnHeader}>Juez 2</DataTable.Title>
-          <DataTable.Title style={styles.columnHeader}>Juez 3</DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
+            <Text style={styles.columnHeaderText}>Nombre</Text>
+          </DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+            <Text style={styles.columnHeaderText}>Fecha</Text>
+          </DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+            <Text style={styles.columnHeaderText}>Hora</Text>
+          </DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
+            <Text style={styles.columnHeaderText}>Club Responsable</Text>
+          </DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+            <Text style={styles.columnHeaderText}>Monto</Text>
+          </DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
+            <Text style={styles.columnHeaderText}>Dirección</Text>
+          </DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+            <Text style={styles.columnHeaderText}>Juez 1</Text>
+          </DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+            <Text style={styles.columnHeaderText}>Juez 2</Text>
+          </DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+            <Text style={styles.columnHeaderText}>Juez 3</Text>
+          </DataTable.Title>
         </DataTable.Header>
 
         {loading ? (
@@ -53,15 +72,51 @@ const ReporteEvento = () => {
         ) : (
           data.slice(from, to).map((item, index) => (
             <DataTable.Row key={index} style={styles.row}>
-              <DataTable.Cell style={styles.cell}>{item.nombre}</DataTable.Cell>
-              <DataTable.Cell style={styles.cell}>{item.fecha}</DataTable.Cell>
-              <DataTable.Cell style={styles.cell}>{item.hora}</DataTable.Cell>
-              <DataTable.Cell style={styles.cell}>{item.club_nombre}</DataTable.Cell>
-              <DataTable.Cell style={styles.cell}>{item.monto}</DataTable.Cell>
-              <DataTable.Cell style={styles.cell}>{item.direccion}</DataTable.Cell>
-              <DataTable.Cell style={styles.cell}>{item.juez1}</DataTable.Cell>
-              <DataTable.Cell style={styles.cell}>{item.juez2}</DataTable.Cell>
-              <DataTable.Cell style={styles.cell}>{item.juez3}</DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.nombre}</Text>
+                </View>
+              </DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.fecha}</Text>
+                </View>
+              </DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.hora}</Text>
+                </View>
+              </DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.club_nombre}</Text>
+                </View>
+              </DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.monto}</Text>
+                </View>
+              </DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.direccion}</Text>
+                </View>
+              </DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.juez1}</Text>
+                </View>
+              </DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.juez2}</Text>
+                </View>
+              </DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+                <View style={styles.cellView}>
+                  <Text style={styles.text}>{item.juez3}</Text>
+                </View>
+              </DataTable.Cell>
             </DataTable.Row>
           ))
         )}
@@ -83,20 +138,31 @@ const ReporteEvento = () => {
 const styles = StyleSheet.create({
   columnHeader: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     fontWeight: 'bold',
-    fontSize: 14,
+  },
+  columnHeaderText: {
+    fontSize: 20,
   },
   row: {
     backgroundColor: 'white',
+    flexDirection: 'row',
   },
   cell: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: 7,
-    flexWrap: 'wrap', // Añade esta propiedad para que las palabras largas se ajusten en varias líneas
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRightWidth: 1,
+    padding: 5,
+  },
+  cellView: {
+    maxWidth: 150,
+    overflow: 'hidden',
+  },
+  text: {
+    textAlign: 'left',
+    fontSize: 15,
   },
 });
 

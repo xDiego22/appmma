@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import { DataTable } from 'react-native-paper';
 import axios from 'axios';
+import { BASE_URL } from '../config';
 
 const Historial = () => {
   const [atletas, setAtletas] = useState([]);
@@ -16,7 +17,7 @@ const Historial = () => {
 
   const fetchDataFromApi = async () => {
     try {
-      const response = await axios.get('http://192.168.0.129/mma/api/historial');
+      const response = await axios.get(`${BASE_URL}/historial`);
       setAtletas(response.data);
     } catch (error) {
       console.error('Error al obtener datos de la API', error);
@@ -27,7 +28,7 @@ const Historial = () => {
     try {
       setSelectedAtleta(option.atleta);
   
-      const response = await axios.get(`http://192.168.0.129/mma/api/historial-atleta/${option.atleta.id}`);
+      const response = await axios.get(`${BASE_URL}/historial-atleta/${option.atleta.id}`);
       console.log('Response from historial-atleta API:', response.data);
   
       setHistorialData(response.data.historial || []);

@@ -31,7 +31,7 @@ const Historial = () => {
       const response = await axios.get(`${BASE_URL}/historial-atleta/${option.atleta.id}`);
       console.log('Response from historial-atleta API:', response.data);
   
-      setHistorialData(response.data.historial || []);
+      setHistorialData(response.data || []);
     } catch (error) {
       console.error('Error al obtener historial del atleta', error);
     }
@@ -58,7 +58,9 @@ const Historial = () => {
         onChange={(option) => handleSelectAtleta(option)}
         ref={modalSelectorRef}
         style={styles.modalSelector} // Agrega el estilo aquí
+        initValueTextStyle={selectedAtleta ? styles.selectedText : styles.defaultText}
       />
+
 
       <ScrollView horizontal>
 
@@ -87,7 +89,7 @@ const Historial = () => {
           ) : (
             <DataTable.Row key="empty">
               <DataTable.Cell colSpan={2} style={styles.cell}>
-                Historial vacío
+              <Text style={{ fontSize: 20 }}>Historial vacío</Text>
               </DataTable.Cell>
             </DataTable.Row>
           )}
@@ -126,8 +128,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start', // Alineación horizontal al centro
     justifyContent: 'flex-start', // Alineación vertical al centro
   },
+  selectedText: {
+    color: 'black',
+  },
+  defaultText: {
+    color: 'black',
+  },
+
   modalSelector: {
-    height: 50, // ajusta la altura según tus necesidades
+    height: 50,
   },
 });
 

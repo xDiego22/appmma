@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'left',
-    fontSize: 15,
+    fontSize: 16,
   },
 });
 

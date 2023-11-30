@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import { DataTable } from 'react-native-paper';
 import axios from 'axios';
 import { BASE_URL } from '../config';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 const Historial = () => {
   const [atletas, setAtletas] = useState([]);
   const [historialData, setHistorialData] = useState([]);
   const [selectedAtleta, setSelectedAtleta] = useState(null);
   const modalSelectorRef = useRef(null);
+  const { userToken } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
 
   useEffect(() => {
     fetchDataFromApi();
@@ -17,10 +20,22 @@ const Historial = () => {
 
   const fetchDataFromApi = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/historial`);
+      const response = await axios.get(`${BASE_URL}/historial`, {
+      headers: {
+        'jwt': `Bearer ${userToken}`,
+      }
+    }) ;
       setAtletas(response.data);
     } catch (error) {
-      console.error('Error al obtener datos de la API', error);
+      if (error.response && error.response.status === 403) {
+        // La solicitud fue prohibida (Forbidden)
+        console.log("Error 403: Acceso prohibido");
+        console.log("Datos de respuesta:", error.response.data);
+        alert('Su sesion ha expirado');
+        setTimeout(() => { logout() }, 3000);
+      } else {
+        console.error('Error al obtener datos de la API', error);
+      }
     }
   };
 
@@ -28,21 +43,35 @@ const Historial = () => {
     try {
       setSelectedAtleta(option.atleta);
   
-      const response = await axios.get(`${BASE_URL}/historial-atleta/${option.atleta.id}`);
-      console.log('Response from historial-atleta API:', response.data);
-  
+      const response = await axios.get(`${BASE_URL}/historial-atleta/${option.atleta.id}`, {
+        headers: {
+          'jwt': `Bearer ${userToken}`,
+        }
+      });
+      
       setHistorialData(response.data || []);
     } catch (error) {
-      console.error('Error al obtener historial del atleta', error);
+       if (error.response && error.response.status === 403) {
+        // La solicitud fue prohibida (Forbidden)
+        console.log("Error 403: Acceso prohibido");
+        console.log("Datos de respuesta:", error.response.data);
+        alert('Su sesion ha expirado');
+        setTimeout(() => { logout() }, 3000);
+      } else if (error.response && error.response.status === 400){
+        alert('Datos incorrectos');
+      } else {
+        
+        console.error('Error al obtener historial del atleta', error);
+      }
     }
   };
 
   // Ajusta la estructura de datos para el ModalSelector
-  const selectorData = atletas.map((item) => ({
+  const selectorData = atletas.length > 0 ? atletas.map((item) => ({
     key: item.id,
     label: `${item.cedula} -- ${item.nombre}`,
     atleta: item, // Incluye el objeto completo del atleta
-  }));
+  })) : [];
 
   return (
     <View style={styles.container}>

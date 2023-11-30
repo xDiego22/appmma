@@ -3,7 +3,6 @@ import { DataTable } from 'react-native-paper';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import axios from 'axios';
 import { BASE_URL } from '../config';
-
 import { AuthContext } from '../context/AuthContext.jsx';
 
 const ReporteEvento = () => {
@@ -16,7 +15,7 @@ const ReporteEvento = () => {
     // Realiza una solicitud GET a la API para obtener los datos de eventos
     axios.get(`${BASE_URL}/eventos`, {
       headers: {
-        'authorization': `Bearer ${userToken}`,
+        'jwt': `Bearer ${userToken}`,
       }
     }) 
       .then((response) => {
@@ -25,12 +24,14 @@ const ReporteEvento = () => {
       })
       .catch((error) => {
         if (error.response && error.response.status === 403) {
-        // La solicitud fue prohibida (Forbidden)
-        console.log("Error 403: Acceso prohibido");
+          // La solicitud fue prohibida (Forbidden)
+          console.log("Error 403: Acceso prohibido");
           console.log("Datos de respuesta:", error.response.data);
-      } else {
-        console.error(error);
-      }
+          alert('Su sesion ha expirado');
+          setTimeout(() => { logout() }, 3000);
+        } else {
+          console.error(error);
+        }
         setLoading(false);
       });
   }, []);

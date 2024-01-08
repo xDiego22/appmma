@@ -14,30 +14,28 @@ const Historial = () => {
   const { userToken } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
 
+  
   useEffect(() => {
-    fetchDataFromApi();
-  }, []);
-
-  const fetchDataFromApi = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/historial`, {
+    axios.get(`${BASE_URL}/historial`, {
       headers: {
-        'jwt': `Bearer ${userToken}`,
+        'jwt': `Bearer ${userToken}`,//token de usuario
       }
-    }) ;
-      setAtletas(response.data);
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        // La solicitud fue prohibida (Forbidden)
-        console.log("Error 403: Acceso prohibido");
-        console.log("Datos de respuesta:", error.response.data);
-        alert('Su sesion ha expirado');
-        setTimeout(() => { logout() }, 3000);
-      } else {
-        console.error('Error al obtener datos de la API', error);
-      }
-    }
-  };
+    })
+      .then((response) => {
+        setAtletas(response.data);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 403) {
+          // La solicitud fue prohibida (Forbidden)
+          console.log("Error 403: Acceso prohibido");
+          console.log("Datos de respuesta:", error.response.data);
+          alert('Su sesion ha expirado');
+          setTimeout(() => { logout() }, 3000);
+        } else {
+          console.error('Error al obtener datos de la API', error);
+        }
+      });
+  }, []);
 
   const handleSelectAtleta = async (option) => {
     try {

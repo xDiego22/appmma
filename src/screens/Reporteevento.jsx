@@ -51,31 +51,31 @@ const ReporteEvento = () => {
     <ScrollView horizontal>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
+          <DataTable.Title style={[styles.columnHeader, { width: 170 }]}>
             <Text style={styles.columnHeaderText}>Nombre</Text>
           </DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
             <Text style={styles.columnHeaderText}>Fecha</Text>
           </DataTable.Title>
           <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
             <Text style={styles.columnHeaderText}>Hora</Text>
           </DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
+          <DataTable.Title style={[styles.columnHeader, { width: 250 }]}>
             <Text style={styles.columnHeaderText}>Club Responsable</Text>
           </DataTable.Title>
           <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
             <Text style={styles.columnHeaderText}>Monto</Text>
           </DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
+          <DataTable.Title style={[styles.columnHeader, { width: 250 }]}>
             <Text style={styles.columnHeaderText}>Dirección</Text>
           </DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
             <Text style={styles.columnHeaderText}>Juez 1</Text>
           </DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
             <Text style={styles.columnHeaderText}>Juez 2</Text>
           </DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>
             <Text style={styles.columnHeaderText}>Juez 3</Text>
           </DataTable.Title>
         </DataTable.Header>
@@ -87,12 +87,12 @@ const ReporteEvento = () => {
         ) : (
           data.slice(from, to).map((item, index) => (
             <DataTable.Row key={index} style={styles.row}>
-              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
+              <DataTable.Cell style={[styles.cell, { width: 170 }]}>
                 <View style={styles.cellView}>
                   <Text style={styles.text}>{item.nombre}</Text>
                 </View>
               </DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
                 <View style={styles.cellView}>
                   <Text style={styles.text}>{item.fecha}</Text>
                 </View>
@@ -102,7 +102,7 @@ const ReporteEvento = () => {
                   <Text style={styles.text}>{item.hora}</Text>
                 </View>
               </DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
+              <DataTable.Cell style={[styles.cell, { width: 250 }]}>
                 <View style={styles.cellView}>
                   <Text style={styles.text}>{item.club_nombre}</Text>
                 </View>
@@ -112,22 +112,22 @@ const ReporteEvento = () => {
                   <Text style={styles.text}>{item.monto}</Text>
                 </View>
               </DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
+              <DataTable.Cell style={[styles.cell, { width: 250 }]}>
                 <View style={styles.cellView}>
                   <Text style={styles.text}>{item.direccion}</Text>
                 </View>
               </DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
                 <View style={styles.cellView}>
                   <Text style={styles.text}>{item.juez1}</Text>
                 </View>
               </DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
                 <View style={styles.cellView}>
                   <Text style={styles.text}>{item.juez2}</Text>
                 </View>
               </DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}>
                 <View style={styles.cellView}>
                   <Text style={styles.text}>{item.juez3}</Text>
                 </View>

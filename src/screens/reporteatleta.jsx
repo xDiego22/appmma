@@ -50,19 +50,19 @@ const ReporteAtletas = () => {
     <ScrollView horizontal>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>Club</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}><Text style={styles.columnHeaderText}>Cedula</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>Nombre</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>Apellido</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 200 }]}><Text style={styles.columnHeaderText}>Club</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>Cedula</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 160 }]}><Text style={styles.columnHeaderText}>Nombre</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 160 }]}><Text style={styles.columnHeaderText}>Apellido</Text></DataTable.Title>
           <DataTable.Title style={[styles.columnHeader, { width: 100 }]}><Text style={styles.columnHeaderText}>Peso</Text></DataTable.Title>
           <DataTable.Title style={[styles.columnHeader, { width: 100 }]}><Text style={styles.columnHeaderText}>Estatura</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 120 }]}><Text style={styles.columnHeaderText}>F. Nacimiento</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 180 }]}><Text style={styles.columnHeaderText}>F. Nacimiento</Text></DataTable.Title>
           <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>Telefono</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}><Text style={styles.columnHeaderText}>Sexo</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}><Text style={styles.columnHeaderText}>Deporte</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}><Text style={styles.columnHeaderText}>Categoria</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 100 }]}><Text style={styles.columnHeaderText}>F. Ingreso</Text></DataTable.Title>
-          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>Entrenador</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>Sexo</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 130 }]}><Text style={styles.columnHeaderText}>Deporte</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>Categoria</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 150 }]}><Text style={styles.columnHeaderText}>F. Ingreso</Text></DataTable.Title>
+          <DataTable.Title style={[styles.columnHeader, { width: 160 }]}><Text style={styles.columnHeaderText}>Entrenador</Text></DataTable.Title>
         </DataTable.Header>
 
         {loading ? (
@@ -72,19 +72,19 @@ const ReporteAtletas = () => {
         ) : (
           data.slice(from, to).map((item,) => (
             <DataTable.Row key={item.cedula} style={styles.row}>
-              <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.nombre_club}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.cedula}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.nombre}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.apellido}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 200 }]}><Text style={styles.text}>{item.nombre_club}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.cedula}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 160 }]}><Text style={styles.text}>{item.nombre}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 160 }]}><Text style={styles.text}>{item.apellido}</Text></DataTable.Cell>
               <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.peso}</Text></DataTable.Cell>
               <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.estatura}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 120 }]}><Text style={styles.text}>{item.fechadenacimiento}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 180 }]}><Text style={styles.text}>{item.fechadenacimiento}</Text></DataTable.Cell>
               <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.telefono}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.sexo}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.deportebase}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.categoria}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 100 }]}><Text style={styles.text}>{item.fechaingresoclub}</Text></DataTable.Cell>
-              <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.entrenador}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.sexo}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 130 }]}><Text style={styles.text}>{item.deportebase}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.categoria}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 150 }]}><Text style={styles.text}>{item.fechaingresoclub}</Text></DataTable.Cell>
+              <DataTable.Cell style={[styles.cell, { width: 160 }]}><Text style={styles.text}>{item.entrenador}</Text></DataTable.Cell>
             </DataTable.Row>
           ))
         )}

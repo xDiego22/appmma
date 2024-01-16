@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef,useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView,RefreshControl } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import { DataTable } from 'react-native-paper';
 import axios from 'axios';
@@ -13,9 +13,12 @@ const Historial = () => {
   const modalSelectorRef = useRef(null);
   const { userToken } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
+  const [refreshing, setRefreshing] = useState(false);
 
+  const fetchData = () => {
+
+    setRefreshing(true);
   
-  useEffect(() => {
     axios.get(`${BASE_URL}/historial`, {
       headers: {
         'jwt': `Bearer ${userToken}`,//token de usuario
@@ -23,6 +26,7 @@ const Historial = () => {
     })
       .then((response) => {
         setAtletas(response.data);
+        setRefreshing(false);
       })
       .catch((error) => {
         if (error.response && error.response.status === 403) {
@@ -34,7 +38,11 @@ const Historial = () => {
         } else {
           console.error('Error al obtener datos de la API', error);
         }
+        setRefreshing(false);
       });
+  }
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const handleSelectAtleta = async (option) => {
@@ -89,7 +97,9 @@ const Historial = () => {
       />
 
 
-      <ScrollView horizontal>
+      <ScrollView horizontal
+        refreshControl={ <RefreshControl refreshing={refreshing}  onRefresh={fetchData} colors={["#E34F62", "#F1213C"]} />}
+      >
 
         <DataTable>
         <DataTable.Header>

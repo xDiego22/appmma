@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext} from 'react';
 import { DataTable } from 'react-native-paper';
-import { ScrollView, View, StyleSheet, Text } from 'react-native';
+import { ScrollView, View, StyleSheet, Text,RefreshControl } from 'react-native';
 import axios from 'axios';
 import { BASE_URL } from '../config';
 import { AuthContext } from '../context/AuthContext.jsx';
@@ -10,8 +10,11 @@ const ReporteResultado = () => {
   const [loading, setLoading] = useState(true);
   const { userToken } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
+  const fetchData = () => {
+    
+    setRefreshing(true);
     axios.get(`${BASE_URL}/resultados`, {
       headers: {
         'jwt': `Bearer ${userToken}`,
@@ -20,6 +23,7 @@ const ReporteResultado = () => {
       .then((response) => {
         setData(response.data);
         setLoading(false);
+        setRefreshing(false);
       })
       .catch((error) => {
         if (error.response && error.response.status === 403) {
@@ -31,8 +35,13 @@ const ReporteResultado = () => {
         } else {
           console.error(error);
         }
+        setRefreshing(false);
         setLoading(false);
       });
+  }
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const [page, setPage] = useState(0);
@@ -47,7 +56,9 @@ const ReporteResultado = () => {
   }, [numberOfItemsPerPage]);
 
   return (
-    <ScrollView horizontal>
+    <ScrollView horizontal
+      refreshControl={ <RefreshControl refreshing={refreshing}  onRefresh={fetchData} colors={["#E34F62", "#F1213C"]} />}
+    >
       <DataTable>
         <DataTable.Header>
           <DataTable.Title style={[styles.columnHeader, { width: 150 }]}>

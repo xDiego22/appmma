@@ -27,6 +27,7 @@ const Historial = () => {
       .then((response) => {
         setAtletas(response.data);
         setRefreshing(false);
+        console.log(JSON.stringify(response.data, null, 2));
       })
       .catch((error) => {
         if (error.response && error.response.status === 403) {
@@ -56,6 +57,9 @@ const Historial = () => {
       });
       
       setHistorialData(response.data || []);
+      //respuesta recibida por el sistema
+      console.log(JSON.stringify(response.data, null, 2));
+
     } catch (error) {
        if (error.response && error.response.status === 403) {
         // La solicitud fue prohibida (Forbidden)

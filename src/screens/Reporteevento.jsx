@@ -25,6 +25,8 @@ const ReporteEvento = () => {
         setData(response.data);
         setLoading(false);
         setRefreshing(false);
+        //respuesta recibida por el sistema
+        console.log(JSON.stringify(response.data, null, 2));
       })
       .catch((error) => {
         if (error.response && error.response.status === 403) {

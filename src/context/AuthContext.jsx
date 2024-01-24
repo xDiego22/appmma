@@ -28,6 +28,17 @@ export const AuthProvider = ({ children }) => {
       if (userInfo.status ==='success') {
         
         const userToken = Desencriptar(response.data.token); //token encriptado para desencriptar
+
+        console.log(`
+        informacion recibida de la peticion al sistema:
+        token: ${userToken}
+        exp: ${userInfo.exp}
+        status: ${userInfo.status}
+        cedula: ${userInfo.cedula}
+        nombre: ${userInfo.nombre}
+        correo: ${userInfo.correo}
+        rol: ${userInfo.rol}`);
+
         setUserInfo(userInfo); //se asigna a estado 
         setUserToken(userToken); //token se pasa a estado
   
@@ -35,13 +46,20 @@ export const AuthProvider = ({ children }) => {
         AsyncStorage.setItem('userToken', userToken); //se guarda en localstorage
         setIsLoading(false);
       } else {
+
+        console.log(`
+        informacion recibida de la peticion al sistema:
+        error: ${userInfo.error}
+        status: ${userInfo.status}`);
+        
         setIsLoading(false);
         alert(userInfo.error);
       }
      
     })
     .catch((error) => {
-      console.log(`error al iniciar sesion ${error}`);
+      
+      console.log(`error al iniciar sesion error: ${error}`);
       setIsLoading(false);
     })
   }

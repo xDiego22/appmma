@@ -4,7 +4,7 @@
     "slug": "MMA",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/mma.png",
+    "icon": "./assets/mma.jpeg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/mma.png",
+        "foregroundImage": "./assets/mma.jpeg",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.xdiego22.MMA"
     },
     "web": {
-      "favicon": "./assets/mma.png"
+      "favicon": "./assets/mma.jpeg"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dd27f3c0-e004-4f1a-9958-cfee269f3ec8"
+      }
     }
   }
 }

@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "appmma",
-    "slug": "appmma",
+    "name": "MMA",
+    "slug": "MMA",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/mma.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash2.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/mma.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/mma.png"
     }
   }
 }

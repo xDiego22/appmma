@@ -22,6 +22,10 @@ const ReporteEvento = () => {
       }
     }) 
       .then((response) => {
+        
+        if (response.data.length === 0) {
+          alert('No se encontró informacion para mostrar.');
+        } 
         setData(response.data);
         setLoading(false);
         setRefreshing(false);

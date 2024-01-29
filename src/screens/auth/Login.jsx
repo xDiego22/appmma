@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from '@expo/vector-icons/Feather'; 
 import InputField from '../../components/InputField.jsx';
-import Captcha from '../../components/Captcha.jsx';
 import {AuthContext} from '../../context/AuthContext.jsx';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -111,17 +110,6 @@ const Login = ({ navigation }) => {
                     </Text>
                 </TouchableOpacity>
 
-                {/* <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        marginBottom: 10,
-                        marginTop: 20
-                    }}>
-                    <TouchableOpacity style={styles.forgotPasswordButton} onPress={() => navigation.navigate('ForgotPassword')}>
-                        <Text style={styles.forgotPasswordButtonText}> Olvidé mi contraseña</Text>
-                    </TouchableOpacity>
-                </View> */}
             
             </View>
         </SafeAreaView>
